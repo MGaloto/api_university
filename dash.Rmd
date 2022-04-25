@@ -1,0 +1,229 @@
+---
+title: "Study Portals"
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    theme: bootstrap
+    navbar:
+       - { title: "Study", href: "https://studyportals.com/", align: right}
+       - { title: "Bachelors", href: "https://www.bachelorsportal.com/search/bachelor", align: right}
+       - { title: "Masters", href: "https://www.mastersportal.com/", align: right}
+       - { title: "Phd", href: "https://www.phdportal.com/search/bachelor", align: right}
+       - { title: "Distance", href: "https://www.distancelearningportal.com/search", align: right}
+       - { title: "Short", href: "https://www.shortcoursesportal.com/", align: right}
+       - { title: "Whed", href: "https://whed.net/results_institutions.php", align: right}
+
+---
+
+
+<style>
+
+
+.navbar {border-color:blue;}
+.navbar-brand {color:black!important;}
+.nav-tabs-custom .nav-tabs li.active a {
+  color: #d99fed;
+}
+
+
+
+.ion-social-twitter{
+    color:blue;
+}
+
+.ion-social-instagram{
+    color:pink;
+}
+
+
+
+</style>   
+
+  
+
+
+
+
+
+```{r setup, include=FALSE}
+
+
+library(flexdashboard)
+library(tidyr)
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+library(plotly)
+library(readxl)
+library(rvest)
+library(rsconnect)
+library(ggplot2)
+library(ggthemes)
+library(viridisLite)
+library(dplyr)
+library(plotly)
+library(tidyverse)
+library(ggplot2)
+library(readr)  
+library(dplyr)  
+library(crayon) 
+library(modeest)
+library(readxl)
+library(ggthemes)
+library(lubridate)
+library(highcharter)
+
+  
+
+```
+
+
+Panel General {data-orientation=rows}
+=====================================
+
+**_Dashboard sobre el contenido de Study Portals y Whed._**
+
+
+
+
+
+Row  {data-height=400}
+-----------------------------------------------------------------------
+
+### ***Areas Totales***
+
+
+
+```{r}
+
+
+Areas = c('BUSINESS','TECH','ARTS','SOFT SKILLS','DESIGN'  ,'DATA',  'MARKETING'   ,'PRODUCT')
+
+Totales = c(23013,     18461, 17059,     10789,    4546,      3788,       3771,         1597)
+
+
+dfdos = data.frame(Areas, Totales)
+
+
+
+
+custom = viridis::cividis(n = 8)
+
+bar_plots = dfdos %>% 
+  hchart('column', hcaes(x = Areas, y = Totales, color = custom),
+         showInLegend = F,
+         maxSize = "15%",
+         dataLabels = list(enabled = TRUE,
+                           format = ' {point.y: .2f}')) %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_tooltip(pointFormat = '<b>Total: </b> {point.y} <br> ' ) %>% 
+  hc_title(text = 'Total de Areas en Study Portals',
+           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
+
+  hc_credits(enabled = TRUE, text = "Fuente: Study Portals",align = "right",verticalAlign = "bottom",
+    style = list(color = "black", fontSize = '15px'),
+               href = " https://studyportals.com/") %>% 
+  hc_yAxis(labels = list(style = list(color = "black")),
+           tickColor = "black") %>% 
+  hc_xAxis(labels = list(style = list(color = "black")),
+           tickColor = "black")
+
+bar_plots
+
+
+
+
+```
+
+
+
+
+
+### ***Niveles Totales***
+
+
+```{r}
+
+nombres = c('Bachelor','Master','Phd','Short')
+
+valores = c(42450,29019,1712,2497)
+
+df = data.frame(nombres, valores)
+
+
+
+
+pie_chart_follow = df %>% hchart('pie', hcaes(x = nombres, y = valores, color = viridis::mako(n = length(nombres)))) %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_tooltip(pointFormat = '<b> Total</b>  {point.y}') %>% 
+  hc_title(text = 'Pie Chart Levels',
+           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
+  hc_subtitle(text = '<b>Contenido por Niveles</b>',
+              style = list(fontSize = '16px', color = "black")) %>% 
+   hc_credits(enabled = TRUE, text = "Fuente: Study Portals",align = "right",verticalAlign = "bottom",
+    style = list(color = "black", fontSize = '15px'),
+               href = " https://studyportals.com/")
+
+pie_chart_follow
+
+
+```
+
+
+
+
+
+
+Row {.tabset} 
+-----------------------------------------------------------------------
+
+### ***Universidades por Pais***
+
+
+```{r}
+
+
+
+df_univ = read_excel('whedfinal.xlsx')
+
+
+
+
+
+
+
+dfuniv = data.frame(table(df_univ$Pais))
+
+
+colnames(dfuniv) = c('Universidades','Cantidad')
+
+
+
+custom = viridis::mako(n = 20)
+
+bar_plots = dfuniv %>% 
+  arrange(desc(dfuniv$Cantidad)) %>% 
+  top_n(20) %>% 
+  hchart('column', hcaes(x = Universidades, y = Cantidad, color = custom),
+         showInLegend = F,
+         maxSize = "15%",
+         dataLabels = list(enabled = TRUE,
+                           format = ' {point.y: .2f}')) %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_title(text = 'Top 20 Universidades por Cantidad',
+           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
+
+  hc_credits(enabled = TRUE, text = "Fuente: Whed",align = "right",verticalAlign = "bottom",
+    style = list(color = "black", fontSize = '15px'),
+               href = " https://whed.net/results_institutions.php") %>% 
+  hc_yAxis(labels = list(style = list(color = "black")),
+           tickColor = "black") %>% 
+  hc_xAxis(labels = list(style = list(color = "black")),
+           tickColor = "black")
+
+bar_plots
+
+
+
+```
+
