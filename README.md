@@ -20,11 +20,12 @@
 <br>
 </br>
 
-El siguiente trabajo consiste en utilizar las siguientes librerias para hacer web scraping en las siguientes paginas:
+El siguiente trabajo consiste en el desarrollo de un Pipeline de Datos para automatizar la extraccion, transoformacion y carga de datos de las siguientes paginas:
 
 [Whed](https://whed.net/results_institutions.php)
 [Study Portals](https://studyportals.com/)
 
+Librerias:
 
 <ui>
 <li>
