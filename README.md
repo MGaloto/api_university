@@ -1,6 +1,7 @@
 <p align="center">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/200px-Python-logo-notext.svg.png" alt="react" width="50" height="50" />
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Selenium_Logo.png" alt="react" width="50" height="50" />
+<img src="https://www.logolynx.com/images/logolynx/7e/7eda91c86c15bb2ed539da59e8983587.jpeg" alt="react" width="50" height="50" />
 </p>
 
 <br>
@@ -23,7 +24,11 @@
 El siguiente trabajo consiste en el desarrollo de un Pipeline de Datos para automatizar la extraccion, transoformacion y carga de datos de las siguientes paginas:
 
 [Whed](https://whed.net/results_institutions.php)
+
 [Study Portals](https://studyportals.com/)
+
+Una vez finalizado se prueba una *API* en el servidor local para los contenidos obtenidos
+
 
 Librerias:
 
@@ -39,6 +44,9 @@ Request
 </li>
 <li>
 Json
+</li>
+<li>
+Flask
 </li>
 </ui>
 
@@ -84,3 +92,15 @@ Ejemplo de un contenido:
   }
 
 ```
+
+API:
+
+
+
+<p align="center">
+  <img 
+    width="800"
+    height="600"
+    src="Img/api.png"
+  >
+</p>
