@@ -57,9 +57,7 @@ Ejemplo de un contenido:
 
 ```json
 {
-    "Area": [
-      "TECH"
-    ],
+    "Area": ["TECH"],
     "Pais": "United States",
     "Ciudad": "Newark",
     "Calles": "104 Hullihen Hall",
@@ -70,18 +68,13 @@ Ejemplo de un contenido:
     "Nivel": "master",
     "Part Time": "Unknown",
     "Full Time": "1 years",
-    "Cursada": [
-      "On Campus"
-    ],
+    "Cursada": ["On Campus"],
     "Duracion": "Unknown",
     "Titulo": "Mechanical Engineering",
     "Universidad": "University of Delaware",
     "Descripcion Programa": "The Department of Mechanical Engineering at the University of Delaware offers graduate programs leading to the degrees of Master of Science in Mechanical Engineering (MSME) and Doctor of Philosophy (PhD) in mechanical engineering. ",
     "Descripcion Universidad": "Founded 1833.",
-    "Categoria": [
-      "Engineering",
-      "Mechanical Engineering"
-    ],
+    "Categoria": ["Engineering","Mechanical Engineering"],
     "Deadline": null,
     "Requerimientos": null,
     "Tutition Free": "26303 EUR / year",
@@ -95,7 +88,26 @@ Ejemplo de un contenido:
 
 API:
 
+Code:
 
+```python
+
+from flask import Flask, json 
+
+app = Flask(__name__)
+
+
+@app.route("/study/<page>/")
+def Study(page):
+    consolidado = json.load(open('Consolidado/consolidado_final.json', encoding='utf-8'))[int(page)]
+    response = app.response_class(response = json.dumps(consolidado), status = 200, mimetype = "application/json")
+
+    return response
+
+app.run( port = 3000, host = "0.0.0.0" )
+
+
+```
 
 <p align="center">
   <img 
