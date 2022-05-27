@@ -101,6 +101,6 @@ API:
   <img 
     width="800"
     height="600"
-    src="Img/api.png"
+    src="Img/api.gif"
   >
 </p>
