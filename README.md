@@ -86,13 +86,23 @@ Ejemplo de un contenido:
 
 ```
 
-Final Dashboard:
+# Final Dashboard:
 
 ```{r}
 library(highcharter)
 library(flexdashboard)
 ```
 
+Publish
+
+<ui>
+
+<li>
+https://rpubs.com/MGaloto/study_university
+</li>
+  
+
+</ui>
 
 <p align="center">
   <img 
