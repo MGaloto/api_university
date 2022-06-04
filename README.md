@@ -88,6 +88,8 @@ Ejemplo de un contenido:
 
 # Final Dashboard:
 
+Library:
+
 ```{r}
 library(highcharter)
 library(flexdashboard)
@@ -101,6 +103,10 @@ Publish
 https://rpubs.com/MGaloto/study_university
 </li>
   
+Gif:
+
+<br>
+</br>
 
 </ui>
 
@@ -112,6 +118,8 @@ https://rpubs.com/MGaloto/study_university
   >
 </p>
 
+<br>
+</br>
 
 
 API:
@@ -140,6 +148,8 @@ def Study(degree, page):
 app.run( port = 3000, host = "0.0.0.0" )
 
 ```
+<br>
+</br>
 
 <p align="center">
   <img 
@@ -148,3 +158,6 @@ app.run( port = 3000, host = "0.0.0.0" )
     src="Img/api.gif"
   >
 </p>
+
+<br>
+</br>
