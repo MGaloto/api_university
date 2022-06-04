@@ -42,9 +42,6 @@ output:
   
 
 
-
-
-
 ```{r setup, include=FALSE}
 
 
@@ -73,33 +70,118 @@ library(ggthemes)
 library(lubridate)
 library(highcharter)
 
-  
 
 ```
 
 
-Panel General {data-orientation=rows}
+
+
+
+
+
+
+
+Whed University
 =====================================
 
-**_Dashboard sobre el contenido de Study Portals y Whed._**
+**_En los siguientes dos gráficos se puede visualizar la cantidad de universidades por país y por continente_**
 
-
-
-
-
-Row  {data-height=400}
+Column {.tabset}
 -----------------------------------------------------------------------
 
-### ***Areas Totales***
-
+### ***Universidades Por País:*** 
 
 
 ```{r}
 
+df_univ = read_excel('whedfinal.xlsx')
+
+
+
+
+dfuniv = data.frame(table(df_univ$Country))
+
+
+colnames(dfuniv) = c('Universidades','Cantidad')
+
+
+
+custom = viridis::mako(n = 20)
+
+bar_plots = dfuniv %>% 
+  arrange(desc(dfuniv$Cantidad)) %>% 
+  top_n(20) %>% 
+  hchart('column', hcaes(x = Universidades, y = Cantidad, color = custom),
+         showInLegend = F,
+         maxSize = "15%",
+         dataLabels = list(enabled = TRUE,
+                           format = ' {point.y: .2f}')) %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_title(text = 'Top 20 Universidades por Cantidad',
+           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
+
+  hc_credits(enabled = TRUE, text = "Fuente: Whed",align = "right",verticalAlign = "bottom",
+    style = list(color = "black", fontSize = '15px'),
+               href = "https://whed.net/results_institutions.php") %>% 
+  hc_yAxis(labels = list(style = list(color = "black")),
+           tickColor = "black") %>% 
+  hc_xAxis(labels = list(style = list(color = "black")),
+           tickColor = "black")
+
+bar_plots
+
+
+
+```
+
+
+
+### ***Universidades Por Continente:*** 
+
+```{r}
+
+
+dfcont = data.frame(table(df_univ$Continent))
+
+
+colnames(dfcont) = c('Continent', 'Frequency')
+
+
+pie_chart_follow = dfcont %>% hchart('pie', hcaes(x = Continent, y = Frequency, color = viridis::mako(n = length(dfcont$Continent)))) %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_tooltip(pointFormat = '<b> Total</b>  {point.y}') %>% 
+  hc_title(text = 'Pie Chart Continents',
+           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
+  hc_subtitle(text = '<b>Universidades por Continentes</b>',
+              style = list(fontSize = '16px', color = "black")) %>% 
+   hc_credits(enabled = TRUE, text = "Fuente: Whed",align = "right",verticalAlign = "bottom",
+    style = list(color = "black", fontSize = '15px'),
+               href ="https://whed.net/results_institutions.php")
+
+pie_chart_follow
+
+
+```
+
+
+
+
+Study Portals
+=====================================
+
+**_En los siguientes dos gráficos se puede visualizar la cantidad de programas por Área y un gráfico de torta por Degree_**
+
+Column {.tabset}
+-----------------------------------------------------------------------
+
+### ***Áreas Totales:*** 
+
+
+```{r}
 
 Areas = c('BUSINESS','TECH','ARTS','SOFT SKILLS','DESIGN'  ,'DATA',  'MARKETING'   ,'PRODUCT')
 
-Totales = c(23013,     18461, 17059,     10789,    4546,      3788,       3771,         1597)
+Totales = c(19237,     16287, 15360,     8863,    3943,      3044,       3182,         1166)
 
 
 dfdos = data.frame(Areas, Totales)
@@ -107,7 +189,7 @@ dfdos = data.frame(Areas, Totales)
 
 
 
-custom = viridis::cividis(n = 8)
+custom = viridis::mako(n = 8)
 
 bar_plots = dfdos %>% 
   hchart('column', hcaes(x = Areas, y = Totales, color = custom),
@@ -132,25 +214,19 @@ bar_plots
 
 
 
-
 ```
 
 
 
-
-
-### ***Niveles Totales***
-
+### ***Totales por Degree:*** 
 
 ```{r}
 
-nombres = c('Bachelor','Master','Phd','Short')
+nombres = c('Bachelor','Master','Phd','Course')
 
-valores = c(42450,29019,1712,2497)
+valores = c(38548,23700,1491,1100)
 
 df = data.frame(nombres, valores)
-
-
 
 
 pie_chart_follow = df %>% hchart('pie', hcaes(x = nombres, y = valores, color = viridis::mako(n = length(nombres)))) %>% 
@@ -170,60 +246,39 @@ pie_chart_follow
 ```
 
 
+Datos
+=====================================
 
+**_Datos_**
 
-
-
-Row {.tabset} 
+Column {.tabset}
 -----------------------------------------------------------------------
 
-### ***Universidades por Pais***
+### ***Data:*** 
+
+
 
 
 ```{r}
+dfa = read_excel('Consolidado/consolidado_final.xlsx')
+
+
+dfa$AboutInstitution = NULL
+
+dfa$AboutProgram = NULL
+
+#dfa = dfa[, c("año", "inflacion", "recaudacion", "recaudacion_en_mill", "gastopbi")]
+
+library(DT)
 
 
 
-df_univ = read_excel('whedfinal.xlsx')
+dfa %>%
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip', scrollY = '800px',
+                           buttons = c('copy', 'csv', 'excel', 'pdf')))
 
-
-
-
-
-
-
-dfuniv = data.frame(table(df_univ$Pais))
-
-
-colnames(dfuniv) = c('Universidades','Cantidad')
-
-
-
-custom = viridis::mako(n = 20)
-
-bar_plots = dfuniv %>% 
-  arrange(desc(dfuniv$Cantidad)) %>% 
-  top_n(20) %>% 
-  hchart('column', hcaes(x = Universidades, y = Cantidad, color = custom),
-         showInLegend = F,
-         maxSize = "15%",
-         dataLabels = list(enabled = TRUE,
-                           format = ' {point.y: .2f}')) %>% 
-  hc_add_theme(hc_theme_google()) %>% 
-  hc_title(text = 'Top 20 Universidades por Cantidad',
-           style = list(fontSize = '20px', fontWeight = 'bold')) %>% 
-
-  hc_credits(enabled = TRUE, text = "Fuente: Whed",align = "right",verticalAlign = "bottom",
-    style = list(color = "black", fontSize = '15px'),
-               href = " https://whed.net/results_institutions.php") %>% 
-  hc_yAxis(labels = list(style = list(color = "black")),
-           tickColor = "black") %>% 
-  hc_xAxis(labels = list(style = list(color = "black")),
-           tickColor = "black")
-
-bar_plots
 
 
 
 ```
-

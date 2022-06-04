@@ -86,6 +86,24 @@ Ejemplo de un contenido:
 
 ```
 
+Final Dashboard:
+
+```{r}
+library(highcharter)
+library(flexdashboard)
+```
+
+
+<p align="center">
+  <img 
+    width="650"
+    height="450"
+    src="Img/dash.gif"
+  >
+</p>
+
+
+
 API:
 
 Code:
@@ -115,8 +133,8 @@ app.run( port = 3000, host = "0.0.0.0" )
 
 <p align="center">
   <img 
-    width="800"
-    height="600"
+    width="650"
+    height="450"
     src="Img/api.gif"
   >
 </p>
